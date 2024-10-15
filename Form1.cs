@@ -33,10 +33,32 @@ namespace Cipher
             {
                 button_encrypt_vigenere_case();
             }
+            else if (cipher_mode == 2)
+            {
+                button_encrypt_one_time_pad();
+            }
             else
             {
                 MessageBox.Show("You have not chosen a cipher scheme");
                 return;
+            }
+        }
+
+
+        private void button_encrypt_one_time_pad()
+        {
+            try
+            {
+                One_time_pad otp = new One_time_pad();
+                string plaintext = textBox_plaintext.Text;
+                string encrypted_text = otp.Encrypt(plaintext);
+                textBox_encrypt.Text = encrypted_text;
+                textBox_key.Text = otp.get_encrypted_key();
+                textBox_plaintext.Text = otp.get_encrypted_plaintext();
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -113,10 +135,30 @@ namespace Cipher
             {
                 button_decrypt_vigenere_cipher();
             }
+            else if (cipher_mode == 2)
+            {
+                button_decrypt_one_time_pad();
+            }
             else
             {
                 MessageBox.Show("You have not chosen a cipher scheme");
                 return;
+            }
+        }
+
+        private void button_decrypt_one_time_pad()
+        {
+            try
+            {
+                One_time_pad otp = new One_time_pad();
+                string encrypted = textBox_encrypt.Text;
+                string key = textBox_key.Text;
+                string plaintext = otp.Decrypt(encrypted, key);
+                textBox_plaintext.Text = plaintext;
+            }
+            catch(ArgumentException ex) 
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -158,6 +200,11 @@ namespace Cipher
                 cipher_mode = 1;
                 label_cipher_mode.Text = comboBox1.Text;
                 checkBox_auto_key.Visible = true;
+            }
+            if (comboBox1.SelectedIndex == 2)
+            {
+                cipher_mode = 2;
+                label_cipher_mode.Text = comboBox1.Text;
             }
         }
     }

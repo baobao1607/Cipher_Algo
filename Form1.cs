@@ -9,8 +9,9 @@ namespace Cipher
 
         public Form1()
         {
-            cipher_mode = -1;
+
             InitializeComponent();
+            cipher_mode = -1;
             InitalizeComboBox();
         }
 
@@ -30,7 +31,7 @@ namespace Cipher
             {
                 button_encrypt_vigenere_case();
             }
-            else 
+            else
             {
                 MessageBox.Show("You have not chosen a cipher scheme");
                 return;
@@ -41,11 +42,21 @@ namespace Cipher
         {
             try
             {
-                string key = textBox_key.Text;
-                Vigenere_Cipher vn = new Vigenere_Cipher(key);
+                string key = string.Empty;
+                Vigenere_Cipher cipher;
+                if (checkBox_auto_key.Checked)
+                {
+                    Vigenere_Cipher vn = new Vigenere_Cipher();
+                    key = vn.get_auto_key(textBox_plaintext.Text);
+                } else
+                {
+                    key = textBox_key.Text;
+                }
+                cipher = new Vigenere_Cipher(key);
                 string plaintext = textBox_plaintext.Text;
-                string encryptedText = vn.Encrypt(plaintext);
+                string encryptedText = cipher.Encrypt(plaintext);
                 textBox_encrypt.Text = encryptedText;
+                textBox_key.Text = key;
             }
             catch (ArgumentException ex)
             {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Windows.Forms;
 
 namespace Cipher
 {
@@ -21,6 +22,44 @@ namespace Cipher
             characters_to_keys = new Dictionary<char, int>();
             valid_key = GetKey(key);
             InitializeCipherData();
+        }
+
+        public Vigenere_Cipher()
+        {
+            ciphertext = new StringBuilder();
+            key_to_characters = new Dictionary<int, char>();
+            characters_to_keys = new Dictionary<char, int>();
+            InitializeCipherData();
+            valid_key = string.Empty;
+        }
+
+        public string get_auto_key(string plaintext)
+        {
+            StringBuilder build_key = new StringBuilder();
+            char[] plaintext_char = plaintext.ToCharArray();
+            Random randomGenerator = new Random();
+            if (plaintext_char.Length == 0)
+            {
+                throw new ArgumentException("you have not input a plaintext");
+            }
+            foreach (char c in plaintext_char)
+            {
+                if (!char.IsLetter(c) && c != ' ')
+                {
+                    throw new ArgumentException("Invalid keys in plaintext");
+                }
+                if (char.IsLetter(c))
+                {
+                    int random = randomGenerator.Next(0, 52);
+                    char k = key_to_characters[random];
+                    build_key.Append(k);
+                } else
+                {
+                    continue;
+                }
+            }
+            valid_key = build_key.ToString();
+            return valid_key;
         }
 
         private string GetKey(string key)

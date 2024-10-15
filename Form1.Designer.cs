@@ -39,6 +39,7 @@
             label_key = new Label();
             comboBox1 = new ComboBox();
             label_cipher_mode = new Label();
+            checkBox_auto_key = new CheckBox();
             SuspendLayout();
             // 
             // textBox_plaintext
@@ -50,7 +51,7 @@
             // 
             // button_encrypt
             // 
-            button_encrypt.Location = new Point(20, 279);
+            button_encrypt.Location = new Point(303, 500);
             button_encrypt.Name = "button_encrypt";
             button_encrypt.Size = new Size(207, 55);
             button_encrypt.TabIndex = 1;
@@ -85,7 +86,7 @@
             // 
             // button_decrypt
             // 
-            button_decrypt.Location = new Point(251, 279);
+            button_decrypt.Location = new Point(58, 500);
             button_decrypt.Name = "button_decrypt";
             button_decrypt.Size = new Size(207, 55);
             button_decrypt.TabIndex = 5;
@@ -95,7 +96,7 @@
             // 
             // button_refresh
             // 
-            button_refresh.Location = new Point(251, 203);
+            button_refresh.Location = new Point(122, 215);
             button_refresh.Name = "button_refresh";
             button_refresh.Size = new Size(244, 42);
             button_refresh.TabIndex = 6;
@@ -137,11 +138,22 @@
             label_cipher_mode.TabIndex = 10;
             label_cipher_mode.Text = "No Cipher Chosen";
             // 
+            // checkBox_auto_key
+            // 
+            checkBox_auto_key.AutoSize = true;
+            checkBox_auto_key.Location = new Point(654, 171);
+            checkBox_auto_key.Name = "checkBox_auto_key";
+            checkBox_auto_key.Size = new Size(196, 29);
+            checkBox_auto_key.TabIndex = 11;
+            checkBox_auto_key.Text = "Generated Auto Key";
+            checkBox_auto_key.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1194, 606);
+            Controls.Add(checkBox_auto_key);
             Controls.Add(label_cipher_mode);
             Controls.Add(comboBox1);
             Controls.Add(label_key);
@@ -172,5 +184,6 @@
         private Label label_key;
         private ComboBox comboBox1;
         private Label label_cipher_mode;
+        private CheckBox checkBox_auto_key;
     }
 }

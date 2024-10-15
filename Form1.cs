@@ -12,6 +12,7 @@ namespace Cipher
 
             InitializeComponent();
             cipher_mode = -1;
+            checkBox_auto_key.Visible = false;
             InitalizeComboBox();
         }
 
@@ -19,6 +20,7 @@ namespace Cipher
         {
             comboBox1.Items.Add("Caesar Cipher");
             comboBox1.Items.Add("Vigenere Cipher");
+            comboBox1.Items.Add("One Time Pad");
         }
 
         private void button_encrypt_Click(object sender, EventArgs e)
@@ -155,6 +157,7 @@ namespace Cipher
             {
                 cipher_mode = 1;
                 label_cipher_mode.Text = comboBox1.Text;
+                checkBox_auto_key.Visible = true;
             }
         }
     }

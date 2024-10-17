@@ -40,6 +40,9 @@
             comboBox1 = new ComboBox();
             label_cipher_mode = new Label();
             checkBox_auto_key = new CheckBox();
+            comboBox_RSA_key = new ComboBox();
+            checkBox_RSA_private_key = new CheckBox();
+            textBox_private_key = new TextBox();
             SuspendLayout();
             // 
             // textBox_plaintext
@@ -148,11 +151,40 @@
             checkBox_auto_key.Text = "Generated Auto Key";
             checkBox_auto_key.UseVisualStyleBackColor = true;
             // 
+            // comboBox_RSA_key
+            // 
+            comboBox_RSA_key.FormattingEnabled = true;
+            comboBox_RSA_key.Location = new Point(122, 166);
+            comboBox_RSA_key.Name = "comboBox_RSA_key";
+            comboBox_RSA_key.Size = new Size(511, 33);
+            comboBox_RSA_key.TabIndex = 12;
+            // 
+            // checkBox_RSA_private_key
+            // 
+            checkBox_RSA_private_key.AutoSize = true;
+            checkBox_RSA_private_key.Location = new Point(654, 206);
+            checkBox_RSA_private_key.Name = "checkBox_RSA_private_key";
+            checkBox_RSA_private_key.Size = new Size(169, 29);
+            checkBox_RSA_private_key.TabIndex = 13;
+            checkBox_RSA_private_key.Text = "Enter Private Key";
+            checkBox_RSA_private_key.UseVisualStyleBackColor = true;
+            checkBox_RSA_private_key.CheckedChanged += checkBox_RSA_private_key_CheckedChanged;
+            // 
+            // textBox_private_key
+            // 
+            textBox_private_key.Location = new Point(561, 269);
+            textBox_private_key.Name = "textBox_private_key";
+            textBox_private_key.Size = new Size(434, 31);
+            textBox_private_key.TabIndex = 14;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1194, 606);
+            Controls.Add(textBox_private_key);
+            Controls.Add(checkBox_RSA_private_key);
+            Controls.Add(comboBox_RSA_key);
             Controls.Add(checkBox_auto_key);
             Controls.Add(label_cipher_mode);
             Controls.Add(comboBox1);
@@ -185,5 +217,8 @@
         private ComboBox comboBox1;
         private Label label_cipher_mode;
         private CheckBox checkBox_auto_key;
+        private ComboBox comboBox_RSA_key;
+        private CheckBox checkBox_RSA_private_key;
+        private TextBox textBox_private_key;
     }
 }

@@ -4,8 +4,6 @@ namespace Cipher
 {
     internal class One_time_pad
     {
-        Dictionary<int, char> key_to_characters;
-        Dictionary<char, int> characters_to_keys;
         string encrypted_plaintext;
         string encrypted_key;
         string encrypted_text;
@@ -13,13 +11,10 @@ namespace Cipher
 
         public One_time_pad()
         {
-            key_to_characters = new Dictionary<int, char>();
-            characters_to_keys = new Dictionary<char, int>();
             encrypted_plaintext = String.Empty;
             encrypted_text = String.Empty;
             encrypted_key = String.Empty;
             key_log = new List<String>();   
-            InitializeCipherData();
         }
 
 
@@ -58,18 +53,6 @@ namespace Cipher
             return encrypted_text;
         }
 
-        private void InitializeCipherData()
-        {
-            for (int i = 0; i <= 25; i++)
-            {
-                char letter = (char)('a' + i);
-                char upperletter = (char)('A' + i);
-                key_to_characters.Add(i, letter);
-                key_to_characters.Add(i + 26, upperletter);
-                characters_to_keys.Add(letter, i);
-                characters_to_keys.Add(upperletter, i + 26);
-            }
-        }
 
         public string Encrypt(string source)
         {

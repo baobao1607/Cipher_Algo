@@ -13,6 +13,9 @@ namespace Cipher
             InitializeComponent();
             cipher_mode = -1;
             checkBox_auto_key.Visible = false;
+            comboBox_RSA_key.Visible = false;
+            checkBox_RSA_private_key.Visible = false;
+            textBox_private_key.Visible= false;
             InitalizeComboBox();
         }
 
@@ -21,6 +24,7 @@ namespace Cipher
             comboBox1.Items.Add("Caesar Cipher");
             comboBox1.Items.Add("Vigenere Cipher");
             comboBox1.Items.Add("One Time Pad");
+            comboBox1.Items.Add("RSA Cipher");
         }
 
         private void button_encrypt_Click(object sender, EventArgs e)
@@ -37,11 +41,26 @@ namespace Cipher
             {
                 button_encrypt_one_time_pad();
             }
+            else if (cipher_mode == 3)
+            {
+                button_encrypt_RSA_cipher();
+            }
             else
             {
                 MessageBox.Show("You have not chosen a cipher scheme");
                 return;
             }
+        }
+
+        private void button_encrypt_RSA_cipher()
+        {
+            string plaintext = textBox_plaintext.Text;
+            RSA_Cipher rsa = new RSA_Cipher();
+            textBox_encrypt.Text = rsa.Encrypt(plaintext);
+            List<long> public_key = rsa.retrieve_public_key();
+            List<long> private_key = rsa.retrieve_private_key();
+            comboBox_RSA_key.Items.Add($"Public key: {public_key[0]}, {public_key[1]}");
+            comboBox_RSA_key.Items.Add($"Private key: {private_key[0]}, {private_key[1]}");
         }
 
 
@@ -72,7 +91,8 @@ namespace Cipher
                 {
                     Vigenere_Cipher vn = new Vigenere_Cipher();
                     key = vn.get_auto_key(textBox_plaintext.Text);
-                } else
+                }
+                else
                 {
                     key = textBox_key.Text;
                 }
@@ -156,7 +176,7 @@ namespace Cipher
                 string plaintext = otp.Decrypt(encrypted, key);
                 textBox_plaintext.Text = plaintext;
             }
-            catch(ArgumentException ex) 
+            catch (ArgumentException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -180,32 +200,61 @@ namespace Cipher
 
         private void button_refresh_Click(object sender, EventArgs e)
         {
+            textBox_key.Clear();
+            textBox_plaintext.Clear();
+            textBox_encrypt.Clear();
+            textBox_private_key.Clear();
+        }
+
+
+        private void refresh()
+        {
             textBox_plaintext.Clear();
             textBox_encrypt.Clear();
             textBox_key.Clear();
-            comboBox1.SelectedIndex = -1;
-            comboBox1.Text = string.Empty;
             label_cipher_mode.Text = "No Cipher Chosen";
+            comboBox_RSA_key.Visible = false;
+            textBox_key.Visible = true;
+            checkBox_RSA_private_key.Visible = false;
+            textBox_private_key.Visible = false;
+            checkBox_auto_key.Visible = false;
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBox1.SelectedIndex == 0)
             {
+                refresh();
                 cipher_mode = 0;
                 label_cipher_mode.Text = comboBox1.Text;
             }
             if (comboBox1.SelectedIndex == 1)
             {
+                refresh();
                 cipher_mode = 1;
                 label_cipher_mode.Text = comboBox1.Text;
                 checkBox_auto_key.Visible = true;
             }
             if (comboBox1.SelectedIndex == 2)
             {
+                refresh();
                 cipher_mode = 2;
                 label_cipher_mode.Text = comboBox1.Text;
             }
+            if (comboBox1.SelectedIndex == 3)
+            {
+                refresh();
+                cipher_mode = 3;
+                label_cipher_mode.Text = comboBox1.Text;
+                textBox_key.Visible = false;
+                comboBox_RSA_key.Visible = true;
+                checkBox_RSA_private_key.Visible = true;
+            }
+        }
+
+        private void checkBox_RSA_private_key_CheckedChanged(object sender, EventArgs e)
+        {
+            textBox_private_key.Visible = checkBox_RSA_private_key.Checked;
         }
     }
 }

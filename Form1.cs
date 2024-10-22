@@ -159,12 +159,40 @@ namespace Cipher
             {
                 button_decrypt_one_time_pad();
             }
+            else if (cipher_mode == 3)
+            {
+                button_decrypt_rsa_cipher();
+            }
             else
             {
                 MessageBox.Show("You have not chosen a cipher scheme");
                 return;
             }
         }
+
+
+        private void button_decrypt_rsa_cipher()
+        {
+            if (String.IsNullOrEmpty(textBox_private_key.Text))
+            {
+                MessageBox.Show("Please put in the private key");
+            }
+            if (String.IsNullOrEmpty(textBox_encrypt.Text))
+            {
+                MessageBox.Show("Please put in the encrypted text");
+            }
+            string[] parts = textBox_private_key.Text.Split(',');
+            long a = long.Parse(parts[0]);
+            long b = long.Parse(parts[1]);
+            List<long> private_key_pair = new List<long>();
+            private_key_pair.Add(a);
+            private_key_pair.Add(b);
+            string encrypted = textBox_encrypt.Text;
+            RSA_Cipher rsa = new RSA_Cipher(a, b);
+            string plaintext = rsa.Decrypt(encrypted);
+            textBox_plaintext.Text = plaintext;
+        }
+
 
         private void button_decrypt_one_time_pad()
         {

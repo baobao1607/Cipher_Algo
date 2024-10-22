@@ -5,6 +5,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography;
+using System.Security.Cryptography.Xml;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +18,7 @@ namespace Cipher
         long prime_q;
         long n;
         long e;
-        List<long> key_pulic;
+        List<long> key_public;
         List<long> key_private;
         static Random random = new Random();
 
@@ -26,13 +28,32 @@ namespace Cipher
             prime_p = prime_keys[0];
             prime_q = prime_keys[1];
             n = prime_p * prime_q;
-            key_pulic = get_public_key();
+            key_public = get_public_key();
             key_private = get_private_key(e);
+        }
+
+
+        public RSA_Cipher(long a, long b)
+        {
+            prime_p = -1;
+            prime_q = -1;
+            n = a;
+            key_public = new List<long>();
+            key_private = initialize_private_key(a,b);
+        }
+
+
+        private List<long> initialize_private_key(long a, long b)
+        {
+            List<long> private_key = new List<long>();
+            private_key.Add(a);
+            private_key.Add(b);
+            return private_key;
         }
 
         public List<long> retrieve_public_key()
         {
-            return key_pulic;
+            return key_public;
         }
 
         public List<long> retrieve_private_key()
@@ -208,9 +229,24 @@ namespace Cipher
         {
             byte[] byte_array = UTF8Encoding.UTF8.GetBytes(plaintext);
             BigInteger big_byte_array = new BigInteger(byte_array);
-            BigInteger big_encrypted = BigInteger.ModPow(big_byte_array, key_pulic[0], key_pulic[1]);
+            BigInteger big_encrypted = BigInteger.ModPow(big_byte_array, key_public[0], key_public[1]);
             string encrypted_text = ToHex(big_encrypted);
             return encrypted_text;
+        }
+
+
+        public string Decrypt (string encrypt)
+        {
+            byte[] byte_array = new byte[encrypt.Length/2];
+            for (int i = 0; i < byte_array.Length; i++)
+            {
+                byte_array[i] = Convert.ToByte(encrypt.Substring(i * 2,2 ),16);
+            }
+            BigInteger encrypted_text = new BigInteger(byte_array);
+            BigInteger plaintext_ = BigInteger.ModPow(encrypted_text, key_private[0], key_private[1]);
+            byte[] byte_plaintext = plaintext_.ToByteArray();
+            string plaintext = Encoding.UTF8.GetString(byte_plaintext);
+            return plaintext;
         }
 
 

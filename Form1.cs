@@ -54,6 +54,7 @@ namespace Cipher
 
         private void button_encrypt_RSA_cipher()
         {
+            comboBox_RSA_key.Items.Clear();
             string plaintext = textBox_plaintext.Text;
             RSA_Cipher rsa = new RSA_Cipher();
             textBox_encrypt.Text = rsa.Encrypt(plaintext);
@@ -242,6 +243,7 @@ namespace Cipher
             textBox_key.Clear();
             label_cipher_mode.Text = "No Cipher Chosen";
             comboBox_RSA_key.Visible = false;
+            comboBox_RSA_key.Items.Clear();
             textBox_key.Visible = true;
             checkBox_RSA_private_key.Visible = false;
             textBox_private_key.Visible = false;

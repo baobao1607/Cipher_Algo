@@ -227,6 +227,7 @@ namespace Cipher
 
         public string Encrypt(string plaintext)
         {
+            plaintext = plaintext.Replace(" ", "");
             byte[] byte_array = UTF8Encoding.UTF8.GetBytes(plaintext);
             BigInteger big_byte_array = new BigInteger(byte_array);
             BigInteger big_encrypted = BigInteger.ModPow(big_byte_array, key_public[0], key_public[1]);

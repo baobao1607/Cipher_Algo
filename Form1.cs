@@ -25,7 +25,7 @@ namespace Cipher
             comboBox1.Items.Add("Vigenere Cipher");
             comboBox1.Items.Add("One Time Pad");
             comboBox1.Items.Add("RSA Cipher");
-            comboBox1.Items.Add("ECC Cipher");
+     //       comboBox1.Items.Add("ECC Cipher");
         }
 
         private void button_encrypt_Click(object sender, EventArgs e)
@@ -48,13 +48,20 @@ namespace Cipher
             }
             else if (cipher_mode == 4)
             {
-                //
+                button_encrypt_ECC_cipher();
             }
             else
             {
                 MessageBox.Show("You have not chosen a cipher scheme");
                 return;
             }
+        }
+
+
+        private void button_encrypt_ECC_cipher()
+        {
+            comboBox_RSA_key.Items.Clear();
+            ECC_Cipher ECC_Cipher = new ECC_Cipher();
         }
 
         private void button_encrypt_RSA_cipher()
